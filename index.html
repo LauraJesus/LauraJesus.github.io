@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="pt-BR" data-lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laura Raimundi</title>
+<meta name="description" content="Portfólio de Laura Raimundi: análise de dados e automação com Python e SQL.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F2F4F1;
+    --surface: #FFFFFF;
+    --ink: #18262E;
+    --muted: #5B6B73;
+    --line: #D5DBD6;
+    --accent: #1F6F78;
+    --c1: #1F6F78;
+    --c2: #C9A227;
+    --c3: #8C5A9E;
+    --c4: #9AA7AD;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121A1F;
+      --surface: #182329;
+      --ink: #E4EAEC;
+      --muted: #93A3AA;
+      --line: #2A373E;
+      --accent: #5FB3BC;
+      --c1: #5FB3BC;
+      --c2: #D9B648;
+      --c3: #B48CC4;
+      --c4: #55636A;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Schibsted Grotesk", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  html[data-lang="pt"] [lang="en"], html[data-lang="en"] [lang="pt"] { display: none !important; }
+  a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* top bar */
+  header.bar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 0;
+  }
+  header.bar nav { display: flex; gap: 22px; font-size: 15px; }
+  header.bar nav a { color: var(--muted); text-decoration: none; }
+  header.bar nav a:hover { color: var(--ink); }
+  .lang {
+    font: inherit; font-size: 14px; color: var(--ink);
+    background: transparent; border: 1px solid var(--line); border-radius: 999px;
+    padding: 4px 12px; cursor: pointer;
+  }
+  .lang:hover { border-color: var(--muted); }
+
+  /* hero */
+  .hero {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 32px; align-items: center;
+    padding: 56px 0 72px;
+  }
+  .hero h1 {
+    font-size: clamp(44px, 7vw, 84px);
+    line-height: 0.98; letter-spacing: -0.035em; font-weight: 800;
+    margin: 0 0 24px;
+  }
+  .hero p.lead { font-size: 20px; color: var(--ink); max-width: 34ch; margin: 0 0 28px; }
+  .hero .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn {
+    display: inline-block; padding: 10px 18px; border-radius: 999px;
+    font-size: 15px; font-weight: 600; text-decoration: none;
+    border: 1px solid var(--ink); color: var(--ink);
+  }
+  .btn.primary { background: var(--ink); color: var(--bg); }
+  .btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .graph { position: relative; aspect-ratio: 1 / 1; width: 100%; }
+  .graph canvas { width: 100%; height: 100%; display: block; }
+  .graph figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  /* sections */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  .sec { display: grid; grid-template-columns: 200px 1fr; gap: 32px; }
+  .sec > h2 {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0;
+    position: sticky; top: 24px; align-self: start;
+  }
+  .sec-body { max-width: 68ch; }
+
+  /* projects */
+  .project { padding: 0 0 40px; }
+  .project + .project { padding-top: 40px; border-top: 1px dashed var(--line); }
+  .project h3 { font-size: 24px; line-height: 1.25; letter-spacing: -0.015em; margin: 0 0 6px; }
+  .project .meta { color: var(--muted); font-size: 15px; margin: 0 0 14px; }
+  .project p { margin: 0 0 12px; }
+  .project ul { margin: 0 0 14px; padding-left: 20px; }
+  .project li { margin-bottom: 6px; }
+  .project .tags, .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 10px; padding: 0; list-style: none; }
+  .tags li { font-size: 13px; padding: 2px 10px; border-radius: 999px; background: var(--surface); border: 1px solid var(--line); margin: 0; }
+  .award {
+    display: inline-block; font-size: 14px; font-weight: 600;
+    padding: 3px 10px; border-radius: 6px; margin-bottom: 12px;
+    background: color-mix(in srgb, var(--c2) 22%, transparent);
+  }
+  .project .plinks { font-size: 15px; display: flex; gap: 18px; }
+
+  /* timeline */
+  .timeline { list-style: none; margin: 0; padding: 0; }
+  .timeline li { display: grid; grid-template-columns: 120px 1fr; gap: 20px; padding-bottom: 28px; }
+  .timeline .when { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; padding-top: 2px; }
+  .timeline h3 { font-size: 18px; margin: 0; }
+  .timeline .org { color: var(--muted); font-size: 15px; margin: 0 0 6px; }
+  .timeline p { margin: 0; }
+
+  /* skills */
+  dl.skills { margin: 0; display: grid; grid-template-columns: 160px 1fr; gap: 12px 20px; }
+  dl.skills dt { font-weight: 600; }
+  dl.skills dd { margin: 0; color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 40px 0 60px; color: var(--muted); font-size: 15px; }
+  footer .contact { display: flex; flex-wrap: wrap; gap: 22px; margin-bottom: 18px; font-size: 17px; }
+
+  @media (max-width: 760px) {
+    body { font-size: 16px; }
+    .wrap { padding: 0 16px; }
+    header.bar nav { display: none; }
+    header.bar { justify-content: flex-end; }
+    .hero { grid-template-columns: 1fr; padding: 24px 0 48px; }
+    .graph { max-width: 420px; }
+    .sec { grid-template-columns: 1fr; gap: 20px; }
+    .sec > h2 { position: static; }
+    .timeline li { grid-template-columns: 1fr; gap: 2px; }
+    dl.skills { grid-template-columns: 1fr; gap: 2px; }
+    dl.skills dd { margin-bottom: 12px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="bar">
+    <nav aria-label="Seções">
+      <a href="#sobre"><span lang="pt">Sobre</span><span lang="en">About</span></a>
+      <a href="#projetos"><span lang="pt">Projetos</span><span lang="en">Projects</span></a>
+      <a href="#experiencia"><span lang="pt">Experiência</span><span lang="en">Experience</span></a>
+      <a href="#habilidades"><span lang="pt">Habilidades</span><span lang="en">Skills</span></a>
+      <a href="#contato"><span lang="pt">Contato</span><span lang="en">Contact</span></a>
+    </nav>
+    <button class="lang" id="langBtn" type="button" aria-label="Mudar idioma / Switch language">
+      <span lang="pt">English</span><span lang="en">Português</span>
+    </button>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>Laura Raimundi</h1>
+      <p class="lead" lang="pt">Estudante de Ciência da Computação na UNIFEI. Analiso dados e automatizo processos com Python e SQL.</p>
+      <p class="lead" lang="en">Computer Science student at UNIFEI. I analyze data and automate processes with Python and SQL.</p>
+      <div class="links">
+        <a class="btn primary" href="#projetos"><span lang="pt">Ver projetos</span><span lang="en">See projects</span></a>
+        <a class="btn" href="https://github.com/LauraJesus" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/lauraraimundi" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <figure class="graph" style="margin:0">
+      <canvas id="net" aria-hidden="true"></canvas>
+      <figcaption lang="pt">Uma rede com quatro comunidades, como a do projeto de evasão. Passe o cursor para mexer nos nós.</figcaption>
+      <figcaption lang="en">A network with four communities, like the one in the dropout project. Move your cursor to push the nodes.</figcaption>
+    </figure>
+  </div>
+
+  <section id="sobre">
+    <div class="sec">
+      <h2><span lang="pt">Sobre</span><span lang="en">About</span></h2>
+      <div class="sec-body">
+        <p lang="pt">Trabalho com análise de dados e automação. Gosto de pegar um processo manual ou uma base bagunçada, entender o que ela tem a dizer e entregar algo que outras pessoas consigam usar: um relatório, um pipeline, uma resposta clara.</p>
+        <p lang="en">I work with data analysis and automation. I like taking a manual process or a messy dataset, figuring out what it has to say, and delivering something other people can use: a report, a pipeline, a clear answer.</p>
+        <p lang="pt">Me formo em Ciência da Computação pela UNIFEI em 2027. Hoje estudo aprendizado estatístico e machine learning para levar as análises além do descritivo.</p>
+        <p lang="en">I will graduate in Computer Science from UNIFEI in 2027. I'm currently studying statistical learning and machine learning to take my analyses beyond descriptive statistics.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos">
+    <div class="sec">
+      <h2><span lang="pt">Projetos</span><span lang="en">Projects</span></h2>
+      <div class="sec-body">
+
+        <article class="project">
+          <h3><span lang="pt">O que os dados dizem sobre evasão universitária</span><span lang="en">What the data says about university dropout</span></h3>
+          <p class="meta"><span lang="pt">Ciência de Redes, UNIFEI, 2026, em equipe de três</span><span lang="en">Network Science course, UNIFEI, 2026, team of three</span></p>
+          <p lang="pt">Com uma base de 4.424 alunos (Realinho et al., 2022), a pergunta era: existem perfis de aluno em que a evasão se concentra? Tratamos os 36 atributos, removemos os pouco informativos, discretizamos os numéricos e ligamos alunos parecidos em uma rede de similaridade.</p>
+          <p lang="en">Using a dataset of 4,424 students (Realinho et al., 2022), the question was: are there student profiles where dropout concentrates? We cleaned the 36 attributes, dropped the uninformative ones, binned the numeric ones and linked similar students in a similarity network.</p>
+          <ul lang="pt">
+            <li>Encontramos 4 grupos de alunos. Em um deles, 59% evadiram, 1,8 vez a taxa geral: alunos mais velhos, do noturno, com mensalidade atrasada e poucos bolsistas.</li>
+            <li>No grupo com mais bolsistas, a evasão cai para 7%.</li>
+            <li>Validamos os grupos contra modelos nulos e testes de permutação, para garantir que não eram efeito do acaso.</li>
+          </ul>
+          <ul lang="en">
+            <li>We found 4 student groups. In one of them, 59% dropped out, 1.8 times the overall rate: older students in evening classes, behind on tuition, with few scholarship holders.</li>
+            <li>In the group with the most scholarship holders, dropout falls to 7%.</li>
+            <li>We validated the groups against null models and permutation tests to make sure they weren't a product of chance.</li>
+          </ul>
+          <ul class="tags"><li>Python</li><li>igraph</li><li><span lang="pt">Tratamento de dados</span><span lang="en">Data cleaning</span></li><li><span lang="pt">Segmentação</span><span lang="en">Segmentation</span></li><li><span lang="pt">Testes estatísticos</span><span lang="en">Statistical testing</span></li></ul>
+        </article>
+
+        <article class="project">
+          <h3><span lang="pt">Pipeline que substituiu a digitação manual de mil arquivos</span><span lang="en">A pipeline that replaced typing into a thousand files by hand</span></h3>
+          <p class="meta"><span lang="pt">Iniciação científica, UNIFEI, 2025–2026</span><span lang="en">Undergraduate research, UNIFEI, 2025–2026</span></p>
+          <p lang="pt">A cada rodada de trabalho, a equipe copiava resultados de um software para outro digitando valores à mão em cerca de mil arquivos. Construí o pipeline em Python que faz isso:</p>
+          <p lang="en">Every round of work, the team copied results from one program into another by typing values by hand into about a thousand files. I built the Python pipeline that does it instead:</p>
+          <ul lang="pt">
+            <li>extrai os dados dos arquivos de saída e gera relatórios HTML com as estatísticas;</li>
+            <li>recalcula os parâmetros sob as restrições do processo e gera a entrada da rodada seguinte;</li>
+            <li>valida cada arquivo e marca os inválidos sem interromper o processamento.</li>
+          </ul>
+          <ul lang="en">
+            <li>extracts data from the output files and builds HTML reports with the statistics;</li>
+            <li>recalculates parameters under the process constraints and generates the next round's input;</li>
+            <li>validates every file and flags invalid ones without stopping the run.</li>
+          </ul>
+          <p lang="pt">Resultado: 5 das 13 etapas deixaram de ser manuais, cerca de 3 horas poupadas por rodada.</p>
+          <p lang="en">Result: 5 of the 13 steps no longer need manual work, saving about 3 hours per round.</p>
+          <ul class="tags"><li>Python</li><li>ETL</li><li><span lang="pt">Validação de dados</span><span lang="en">Data validation</span></li><li><span lang="pt">Relatórios automáticos</span><span lang="en">Automated reports</span></li></ul>
+        </article>
+
+        <article class="project">
+          <h3><span lang="pt">Migração de C++ para Python com validação dos resultados</span><span lang="en">C++ to Python migration with validated results</span></h3>
+          <p class="meta"><span lang="pt">Iniciação científica, UNIFEI, 2025–2026</span><span lang="en">Undergraduate research, UNIFEI, 2025–2026</span></p>
+          <span class="award"><span lang="pt">Melhor pôster da SECOMP 2026</span><span lang="en">Best poster award, SECOMP 2026</span></span>
+          <p lang="pt">Reescrevi em Python uma ferramenta legada em C++ que processa milhares de registros e calcula média, desvio padrão e frequência de cada medida. Para confiar na versão nova, mantive o mesmo formato de saída e comparei as duas implementações até a sexta casa decimal.</p>
+          <p lang="en">I rewrote a legacy C++ tool in Python. It processes thousands of records and computes the mean, standard deviation and frequency of each measure. To trust the new version, I kept the same output format and compared both implementations to the sixth decimal place.</p>
+          <ul class="tags"><li>Python</li><li>C++</li><li><span lang="pt">Código legado</span><span lang="en">Legacy code</span></li><li><span lang="pt">Validação</span><span lang="en">Validation</span></li></ul>
+          <div class="plinks"><a href="https://github.com/LauraJesus/ILLIAD" target="_blank" rel="noopener"><span lang="pt">Código no GitHub</span><span lang="en">Code on GitHub</span></a></div>
+        </article>
+
+        <article class="project">
+          <h3><span lang="pt">Pesquisa com usuários em um sistema acadêmico</span><span lang="en">User research on an academic system</span></h3>
+          <p class="meta"><span lang="pt">Interação Humano-Computador, UNIFEI, 2026</span><span lang="en">Human-Computer Interaction course, UNIFEI, 2026</span></p>
+          <p lang="pt">Conduzi entrevistas e testes de usabilidade com estudantes, identifiquei 17 problemas e propus melhorias para cada um.</p>
+          <p lang="en">I ran interviews and usability tests with students, found 17 problems and proposed a fix for each.</p>
+          <ul class="tags"><li><span lang="pt">Entrevistas</span><span lang="en">Interviews</span></li><li><span lang="pt">Testes de usabilidade</span><span lang="en">Usability testing</span></li></ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="experiencia">
+    <div class="sec">
+      <h2><span lang="pt">Experiência</span><span lang="en">Experience</span></h2>
+      <ol class="timeline sec-body">
+        <li>
+          <span class="when">2025 – 2027</span>
+          <div>
+            <h3><span lang="pt">Bolsista de iniciação científica</span><span lang="en">Undergraduate research fellow</span></h3>
+            <p class="org">UNIFEI (FAPEMIG)</p>
+            <p lang="pt">Automação de processos e análise de dados em Python.</p>
+            <p lang="en">Process automation and data analysis in Python.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">2024 – 2025</span>
+          <div>
+            <h3><span lang="pt">Gestão e marketing</span><span lang="en">Management and marketing</span></h3>
+            <p class="org"><span lang="pt">Equipe de competição Black Bee Drones</span><span lang="en">Black Bee Drones competition team</span></p>
+            <p lang="pt">Coordenei entregas em sprints para 8 a 12 membros na preparação para a IMAV e escrevi propostas de patrocínio.</p>
+            <p lang="en">Coordinated sprint deliveries for 8–12 members preparing for IMAV and wrote sponsorship proposals.</p>
+          </div>
+        </li>
+        <li>
+          <span class="when">2022 – 2023</span>
+          <div>
+            <h3><span lang="pt">Professora de inglês</span><span lang="en">English teacher</span></h3>
+            <p class="org">KNN Idiomas</p>
+            <p lang="pt">Turmas de 5 a 10 alunos e materiais adaptados para quem tinha dificuldade.</p>
+            <p lang="en">Classes of 5–10 students, with adapted materials for those who were struggling.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="habilidades">
+    <div class="sec">
+      <h2><span lang="pt">Habilidades</span><span lang="en">Skills</span></h2>
+      <div class="sec-body">
+        <dl class="skills">
+          <dt><span lang="pt">Dados</span><span lang="en">Data</span></dt>
+          <dd><span lang="pt">Python, SQL (MySQL), ETL, validação de dados, estatística descritiva, Scikit-learn, análise de redes</span><span lang="en">Python, SQL (MySQL), ETL, data validation, descriptive statistics, Scikit-learn, network analysis</span></dd>
+          <dt><span lang="pt">Desenvolvimento</span><span lang="en">Development</span></dt>
+          <dd><span lang="pt">Python, C++, Git e GitHub, automação, parsing, refatoração de código legado</span><span lang="en">Python, C++, Git and GitHub, automation, parsing, legacy code refactoring</span></dd>
+          <dt><span lang="pt">Produto</span><span lang="en">Product</span></dt>
+          <dd><span lang="pt">Pesquisa com usuários, testes de usabilidade, Scrum, Kanban</span><span lang="en">User research, usability testing, Scrum, Kanban</span></dd>
+          <dt><span lang="pt">Idiomas</span><span lang="en">Languages</span></dt>
+          <dd><span lang="pt">Português (nativo), inglês (C2, EF SET), mandarim (básico)</span><span lang="en">Portuguese (native), English (C2, EF SET), Mandarin (basic)</span></dd>
+          <dt><span lang="pt">Formação</span><span lang="en">Education</span></dt>
+          <dd><span lang="pt">Bacharelado em Ciência da Computação, UNIFEI, conclusão prevista em 2027</span><span lang="en">BSc in Computer Science, UNIFEI, expected 2027</span></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer id="contato">
+  <div class="wrap">
+    <div class="contact">
+      <a href="mailto:lauraraimundi@hotmail.com">lauraraimundi@hotmail.com</a>
+      <a href="https://www.linkedin.com/in/lauraraimundi" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/LauraJesus" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <p lang="pt">Laura Raimundi Dias Jesus, Itajubá, MG.</p>
+    <p lang="en">Laura Raimundi Dias Jesus, Itajubá, Brazil.</p>
+  </div>
+</footer>
+
+<script>
+// idioma
+(function () {
+  const root = document.documentElement;
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch (e) {}
+  if (saved === "en" || saved === "pt") root.dataset.lang = saved;
+  root.lang = root.dataset.lang === "en" ? "en" : "pt-BR";
+  document.getElementById("langBtn").addEventListener("click", function () {
+    const next = root.dataset.lang === "pt" ? "en" : "pt";
+    root.dataset.lang = next;
+    root.lang = next === "en" ? "en" : "pt-BR";
+    try { localStorage.setItem("lang", next); } catch (e) {}
+  });
+})();
+
+// rede com 4 comunidades (layout por forças)
+(function () {
+  const canvas = document.getElementById("net");
+  const ctx = canvas.getContext("2d");
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let rand = (function (s) { return function () { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; })(42);
+
+  const sizes = [14, 12, 9, 8];
+  const nodes = [], edges = [];
+  sizes.forEach((n, c) => {
+    const a = (c / sizes.length) * Math.PI * 2 + 0.6;
+    for (let i = 0; i < n; i++) {
+      nodes.push({ c, x: 0.5 + 0.22 * Math.cos(a) + (rand() - 0.5) * 0.15,
+                      y: 0.5 + 0.22 * Math.sin(a) + (rand() - 0.5) * 0.15, vx: 0, vy: 0 });
+    }
+  });
+  for (let i = 0; i < nodes.length; i++)
+    for (let j = i + 1; j < nodes.length; j++) {
+      const same = nodes[i].c === nodes[j].c;
+      if (rand() < (same ? 0.32 : 0.012)) edges.push([i, j]);
+    }
+
+  const pointer = { x: -1, y: -1 };
+  function step() {
+    for (let i = 0; i < nodes.length; i++) {
+      const a = nodes[i];
+      for (let j = i + 1; j < nodes.length; j++) {
+        const b = nodes[j];
+        let dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy + 1e-4;
+        const f = 0.00004 / d2;
+        a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f;
+      }
+      a.vx += (0.5 - a.x) * 0.002; a.vy += (0.5 - a.y) * 0.002;
+      if (pointer.x >= 0) {
+        const dx = a.x - pointer.x, dy = a.y - pointer.y, d2 = dx * dx + dy * dy;
+        if (d2 < 0.02) { const f = 0.0006 / (d2 + 0.002); a.vx += dx * f; a.vy += dy * f; }
+      }
+    }
+    edges.forEach(([i, j]) => {
+      const a = nodes[i], b = nodes[j];
+      const dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 1e-4;
+      const f = (d - 0.09) * 0.02;
+      a.vx += dx / d * f; a.vy += dy / d * f; b.vx -= dx / d * f; b.vy -= dy / d * f;
+    });
+    nodes.forEach(n => {
+      n.vx *= 0.85; n.vy *= 0.85;
+      n.x = Math.min(0.96, Math.max(0.04, n.x + n.vx));
+      n.y = Math.min(0.96, Math.max(0.04, n.y + n.vy));
+    });
+  }
+
+  function colors() {
+    const s = getComputedStyle(document.documentElement);
+    return { c: ["--c1", "--c2", "--c3", "--c4"].map(v => s.getPropertyValue(v).trim()),
+             line: s.getPropertyValue("--line").trim() };
+  }
+  let pal = colors();
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { pal = colors(); draw(); });
+
+  function resize() {
+    const r = canvas.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+    canvas.width = r.width * dpr; canvas.height = r.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw();
+  }
+  function draw() {
+    const w = canvas.clientWidth, h = canvas.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+    edges.forEach(([i, j]) => {
+      const a = nodes[i], b = nodes[j];
+      ctx.strokeStyle = a.c === b.c ? pal.c[a.c] : pal.line;
+      ctx.globalAlpha = a.c === b.c ? 0.35 : 0.9;
+      ctx.beginPath(); ctx.moveTo(a.x * w, a.y * h); ctx.lineTo(b.x * w, b.y * h); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+    nodes.forEach(n => {
+      ctx.fillStyle = pal.c[n.c];
+      ctx.beginPath(); ctx.arc(n.x * w, n.y * h, 6, 0, Math.PI * 2); ctx.fill();
+    });
+  }
+
+  canvas.addEventListener("pointermove", e => {
+    const r = canvas.getBoundingClientRect();
+    pointer.x = (e.clientX - r.left) / r.width; pointer.y = (e.clientY - r.top) / r.height;
+  });
+  canvas.addEventListener("pointerleave", () => { pointer.x = pointer.y = -1; });
+  window.addEventListener("resize", resize);
+
+  if (reduce) { for (let i = 0; i < 400; i++) step(); resize(); return; }
+  resize();
+  (function loop() { step(); draw(); requestAnimationFrame(loop); })();
+})();
+</script>
+</body>
+</html>
